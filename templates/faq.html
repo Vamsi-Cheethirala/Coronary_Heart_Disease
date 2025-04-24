@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Frequently Asked Questions</h2>
+
+<div style="max-width: 800px; margin: auto; text-align: left;">
+    <h3>💡 What is coronary heart disease (CHD)?</h3>
+    <p>
+        CHD is a condition where the blood vessels that supply the heart muscle become narrowed or blocked. This can lead to chest pain, shortness of breath, or heart attacks.
+    </p>
+
+    <h3>📊 What are the 13 input features?</h3>
+    <p>
+        The inputs include medical and lifestyle indicators such as:
+        <ul>
+            <li>Age, Sex, Chest Pain Type</li>
+            <li>Resting Blood Pressure, Cholesterol</li>
+            <li>Fasting Blood Sugar, Rest ECG Results</li>
+            <li>Max Heart Rate Achieved, Exercise-induced Angina</li>
+            <li>Oldpeak (ST depression), ST slope, Thalassemia</li>
+        </ul>
+    </p>
+
+    <h3>🤖 How does this tool work?</h3>
+    <p>
+        We use machine learning models trained on real patient data to analyze your input and estimate your risk of CHD. Four models are used: Random Forest, Logistic Regression, Decision Tree, and KNN.
+    </p>
+
+    <h3>⚠️ Is this a medical diagnosis?</h3>
+    <p>
+        No. This tool is for educational purposes only and not a replacement for a professional medical consultation. Always consult your doctor for medical decisions.
+    </p>
+
+    <h3>📈 How accurate is it?</h3>
+    <p>
+        Accuracy depends on the model and input data. On our training dataset, Random Forest performed best with around 85% accuracy.
+    </p>
+</div>
+
+{% endblock %}

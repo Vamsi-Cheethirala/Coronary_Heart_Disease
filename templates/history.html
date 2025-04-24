@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Prediction History</h2>
+
+{% if history %}
+    <table border="1" cellpadding="10" style="margin: auto; background: white; border-collapse: collapse;">
+        <tr>
+            <th>Date</th>
+            <th>Input Data</th>
+            <th>Prediction</th>
+        </tr>
+        {% for entry in history %}
+        <tr>
+            <td>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ entry.input_data }}</td>
+            <td>{{ entry.result }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No predictions yet. Use the <a href="{{ url_for('form') }}">Predict</a> page to get started.</p>
+{% endif %}
+{% endblock %}

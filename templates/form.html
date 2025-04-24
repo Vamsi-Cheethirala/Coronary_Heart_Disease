@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    {% for i in range(13) %}
+        Feature {{ i + 1 }}: <input type="text" name="{{ i }}"><br>
+    {% endfor %}
+    <input type="submit" value="Predict">
+</form>
+{% endblock %}

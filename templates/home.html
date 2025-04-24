@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home-section">
+    <img src="{{ url_for('static', filename='heart.png') }}" alt="Heart Health" class="hero-img">
+
+    <h2>Understand & Predict Coronary Heart Disease</h2>
+    
+    <p>
+        <strong>Coronary Heart Disease (CHD)</strong> is caused by the narrowing of coronary arteries due to plaque buildup,
+        reducing blood flow to the heart. It can lead to chest pain, shortness of breath, and heart attacks.
+    </p>
+
+    <h3>🌍 Why this matters:</h3>
+    <ul class="bullet-points">
+        <li>💔 CHD is the <strong>leading cause of death</strong worldwide.</li>
+        <li>🧪 Early detection reduces mortality by up to <strong>80%</strong>.</li>
+        <li>🧠 AI-powered prediction tools can help assess risk before symptoms appear.</li>
+    </ul>
+
+    <h3>🧠 What this app does:</h3>
+    <p>
+        This tool analyzes 13 health indicators using a trained machine learning model to estimate your risk of CHD.
+        It is <strong>free, fast, and easy to use</strong>.
+    </p>
+
+    <h3>⚠️ Note:</h3>
+    <p>This is not a substitute for a professional diagnosis. Always consult your doctor for medical advice.</p>
+</div>
+{% endblock %}
