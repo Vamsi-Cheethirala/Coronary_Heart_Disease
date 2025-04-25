@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 style="margin-top: 20px;">Welcome, {{ current_user.username }}!</h2>
+
+<!-- Section 1: Change Password -->
+<div style="background: white; padding: 20px; margin: 20px; border-radius: 10px;">
+  <h3>Change Password</h3>
+  <form method="POST" action="{{ url_for('change_password') }}">
+    <input type="password" name="current_password" placeholder="Current Password" required><br><br>
+    <input type="password" name="new_password" placeholder="New Password" required><br><br>
+    <input type="password" name="confirm_password" placeholder="Confirm New Password" required><br><br>
+    <input type="submit" value="Change Password">
+  </form>
+</div>
+
+<!-- Section 2: Prediction History -->
+<div style="background: white; padding: 20px; margin: 20px; border-radius: 10px;">
+  <h3>Your Prediction History</h3>
+  {% if history %}
+    <ul>
+      {% for entry in history %}
+        <li><strong>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</strong> — {{ entry.input_data }} — <strong>Result: {{ entry.result }}</strong></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No predictions made yet.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

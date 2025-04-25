@@ -20,6 +20,7 @@ login_manager.login_view = "login"
 with app.app_context():
     db.create_all()
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -52,7 +53,7 @@ def login():
         user = User.query.filter_by(username=request.form['username']).first()
         if user and check_password_hash(user.password, request.form['password']):
             login_user(user)
-            return redirect(url_for('form'))
+            return redirect(url_for('home'))
         else:
             flash('Invalid username or password. Please try again.', 'danger')
             return redirect(url_for('login'))
@@ -87,7 +88,36 @@ def register():
 
     return render_template('register.html')
 
+@app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    history = PredictionHistory.query.filter_by(user_id=current_user.id).order_by(PredictionHistory.timestamp.desc()).all()
+    return render_template('dashboard.html', history=history)
 
+@app.route('/change_password', methods=['POST'])
+@login_required
+def change_password():
+    current_password = request.form['current_password']
+    new_password = request.form['new_password']
+    confirm_password = request.form['confirm_password']
+
+    if not check_password_hash(current_user.password, current_password):
+        flash('Current password is incorrect.', 'danger')
+        return redirect(url_for('dashboard'))
+
+    if new_password != confirm_password:
+        flash('New passwords do not match.', 'danger')
+        return redirect(url_for('dashboard'))
+
+    if len(new_password) < 8:
+        flash('New password must be at least 8 characters.', 'danger')
+        return redirect(url_for('dashboard'))
+
+    # Save new password
+    current_user.password = generate_password_hash(new_password, method='pbkdf2:sha256')
+    db.session.commit()
+    flash('Password changed successfully.', 'success')
+    return redirect(url_for('dashboard'))
 
 @app.route('/form', methods=['GET', 'POST'])
 @login_required
@@ -191,6 +221,35 @@ def admin_dashboard():
     all_users = User.query.all()
     history = PredictionHistory.query.all()
     return render_template('admin_dashboard.html', users=all_users, history=history)
+
+@app.route('/admin/faqs', methods=['GET', 'POST'])
+@login_required
+def admin_faqs():
+    if current_user.role != 'admin':
+        return redirect(url_for('homepage'))
+
+    faqs = FAQQuestion.query.order_by(FAQQuestion.timestamp.desc()).all()
+
+    if request.method == 'POST':
+        faq_id = request.form['faq_id']
+        answer = request.form['answer']
+
+        faq = FAQQuestion.query.get(faq_id)
+        faq.answer = answer
+        db.session.commit()
+        flash('Answer submitted successfully.', 'success')
+        return redirect(url_for('admin_faqs'))
+
+    return render_template('admin-faqs.html', faqs=faqs)
+
+
+@app.route('/admin/messages')
+@login_required
+@admin_required
+def admin_messages():
+    messages = ContactMessage.query.order_by(ContactMessage.timestamp.desc()).all()
+    return render_template('admin_messages.html', messages=messages)
+
 
 @app.route('/logout')
 @login_required

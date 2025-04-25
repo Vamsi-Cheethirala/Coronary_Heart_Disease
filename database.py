@@ -17,6 +17,9 @@ class PredictionHistory(db.Model):
     result = db.Column(db.String(50))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+    user = db.relationship('User', backref='predictions')  # Add this line
+
+
 class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150))
@@ -29,3 +32,5 @@ class FAQQuestion(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     question = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    answer = db.Column(db.Text)
+    user = db.relationship('User', backref='faqs')

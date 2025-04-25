@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Questions Asked by Users</h2>
+
+<ul>
+  {% for faq in faqs %}
+    <li><strong>{{ faq.user.username }}:</strong> {{ faq.question }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

@@ -7,8 +7,18 @@
 
 <form method="POST">
     <label for="password">Change Password:</label><br>
-    <input type="password" name="password" placeholder="New strong password" required><br><br>
-    <input type="submit" value="Update Password">
+    <div style="position: relative; max-width: 300px; margin: auto;">
+      <input type="password" id="password" name="password" placeholder="8+ chars, 1 cap, 1 num, 1 special" required >
+      <button type="button" onclick="togglePassword()" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px;"  aria-label="Show password">👁️</button>
+    </div>
+    
+    <script>
+      function togglePassword() {
+        const input = document.getElementById("password");
+        input.type = input.type === "password" ? "text" : "password";
+      }
+    </script>
+    <br><br>    <input type="submit" value="Update Password">
 </form>
 
 {% with messages = get_flashed_messages(with_categories=true) %}

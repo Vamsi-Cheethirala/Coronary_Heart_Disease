@@ -13,7 +13,7 @@
     </tr>
     {% for entry in history %}
     <tr>
-        <td>{{ entry.user_id }}</td>
+        <td>{{ entry.user.username }}</td>
         <td>{{ entry.input_data }}</td>
         <td>{{ entry.result }}</td>
         <td>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>

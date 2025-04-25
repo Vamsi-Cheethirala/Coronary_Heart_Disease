@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>User Questions</h2>
+
+{% for faq in faqs %}
+    <div style="margin-bottom: 20px;">
+        <p><b>Q:</b> {{ faq.question }}</p>
+        {% if faq.answer %}
+            <p><b>Answer:</b> {{ faq.answer }}</p>
+        {% else %}
+            <form method="POST">
+                <input type="hidden" name="faq_id" value="{{ faq.id }}">
+                <textarea name="answer" rows="3" cols="50" placeholder="Type your answer here..." required></textarea><br>
+                <button type="submit">Submit Answer</button>
+            </form>
+        {% endif %}
+    </div>
+{% endfor %}
+
+{% endblock %}
