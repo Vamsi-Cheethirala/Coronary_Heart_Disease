@@ -1,9 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method="POST">
-    {% for i in range(13) %}
-        Feature {{ i + 1 }}: <input type="text" name="{{ i }}"><br>
-    {% endfor %}
-    <input type="submit" value="Predict">
+
+<h2 style="margin-top: 20px;">🔍 Predict Coronary Heart Disease</h2>
+
+<form method="POST" style="display: inline-block; text-align: left; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px #ccc;">
+    <table style="border-collapse: separate; border-spacing: 10px;">
+        <tr>
+            <td><label for="age">Age:</label></td>
+            <td><input type="number" name="age" placeholder="e.g. 52" required></td>
+        </tr>
+        <tr>
+            <td><label for="sex">Sex:</label></td>
+            <td><input type="number" name="sex" placeholder="1 = Male, 0 = Female" required></td>
+        </tr>
+        <tr>
+            <td><label for="cp">Chest Pain:</label></td>
+            <td><input type="number" name="cp" placeholder="0 = Typical, 3 = Asymptomatic" required></td>
+        </tr>
+        <tr>
+            <td><label for="bp">Resting BP:</label></td>
+            <td><input type="number" name="bp" placeholder="e.g. 130" required></td>
+        </tr>
+        <tr>
+            <td><label for="chol">Cholesterol:</label></td>
+            <td><input type="number" name="chol" placeholder="e.g. 250" required></td>
+        </tr>
+        <tr>
+            <td><label for="bs">Fasting Sugar:</label></td>
+            <td><input type="number" name="bs" placeholder="1 = Yes, 0 = No" required></td>
+        </tr>
+        <tr>
+            <td><label for="ecg">ECG Results:</label></td>
+            <td><input type="number" name="ecg" placeholder="0–2" required></td>
+        </tr>
+        <tr>
+            <td><label for="Max HR">Max Heart Rate:</label></td>
+            <td><input type="number" name="Max HR" placeholder="e.g. 170" required></td>
+        </tr>
+        <tr>
+            <td><label for="angina">Angina:</label></td>
+            <td><input type="number" name="angina" placeholder="1 = Yes, 0 = No" required></td>
+        </tr>
+        <tr>
+            <td><label for="oldpeak">ST Depression:</label></td>
+            <td><input type="number" name="oldpeak" step="0.1" placeholder="e.g. 1.5" required></td>
+        </tr>
+        <tr>
+            <td><label for="slope">ST Slope:</label></td>
+            <td><input type="number" name="slope" placeholder="0 = Up, 1 = Flat, 2 = Down" required></td>
+        </tr>
+        <tr>
+            <td><label for="ca">CA:</label></td>
+            <td><input type="number" name="ca" placeholder="0–3" required></td>
+        </tr>
+        <tr>
+            <td><label for="thal">Thalassemia:</label></td>
+            <td><input type="number" name="thal" placeholder="0 = Normal, 2 = Reversible" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <input type="submit" value="Predict" style="padding: 10px 20px;">
+            </td>
+        </tr>
+    </table>
 </form>
+
 {% endblock %}

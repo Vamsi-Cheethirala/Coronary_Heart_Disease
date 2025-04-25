@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 style="margin-top: 20px;">Admin Dashboard</h2>
+<p>Welcome, Admin! Here's the prediction activity of all users:</p>
+
+<table border="1" cellpadding="10" style="margin: 20px auto; background: #fff;">
+    <tr style="background-color: #007BFF; color: white;">
+        <th>Username</th>
+        <th>Input</th>
+        <th>Result</th>
+        <th>Date</th>
+    </tr>
+    {% for entry in history %}
+    <tr>
+        <td>{{ entry.user_id }}</td>
+        <td>{{ entry.input_data }}</td>
+        <td>{{ entry.result }}</td>
+        <td>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

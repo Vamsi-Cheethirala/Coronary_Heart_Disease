@@ -1,16 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Contact Us</h2>
 
-{% if success %}
-    <p>✅ Thank you! Your message has been received.</p>
-    <a href="{{ url_for('homepage') }}">Back to Home</a>
-{% else %}
-    <form method="POST">
-        <input type="text" name="name" placeholder="Your Name" required><br>
-        <input type="text" name="email" placeholder="Your Email" required><br>
-        <textarea name="message" rows="5" cols="40" placeholder="Your message..." required></textarea><br>
-        <input type="submit" value="Send Message">
-    </form>
-{% endif %}
+<h2 style="margin-top: 20px;">Contact Us</h2>
+<p>Have a question, issue, or feedback? We’d love to hear from you!</p>
+
+<form method="POST" style="margin-top: 20px;">
+    <input type="text" name="name" placeholder="Your name" required><br>
+    <input type="text" name="email" placeholder="Your email" required><br>
+    <textarea name="message" placeholder="Your message..." rows="4" cols="50" required></textarea><br>
+    <input type="submit" value="Send Message">
+</form>
+
+<!-- Flash feedback -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" style="margin-top: 15px; background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<script>
+  setTimeout(function () {
+    let alert = document.querySelector('.alert');
+    if (alert) alert.style.display = 'none';
+  }, 4000);
+</script>
+
 {% endblock %}

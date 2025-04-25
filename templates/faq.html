@@ -35,5 +35,29 @@
         Accuracy depends on the model and input data. On our training dataset, Random Forest performed best with around 85% accuracy.
     </p>
 </div>
+<hr>
+<h3 style="margin-top: 40px;">Have a question?</h3>
+
+<form method="POST" action="{{ url_for('submit_question') }}">
+    <textarea name="question" rows="4" cols="50" placeholder="Type your question here..." required></textarea><br>
+    <input type="submit" value="Submit Question">
+</form>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" style="margin-top: 15px; background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<script>
+  setTimeout(function () {
+    let alert = document.querySelector('.alert');
+    if (alert) alert.style.display = 'none';
+  }, 4000);
+</script>
 
 {% endblock %}

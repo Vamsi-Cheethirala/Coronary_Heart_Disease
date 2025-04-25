@@ -3,10 +3,68 @@
 <head>
     <title>Heart Disease Predictor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #5e97d3, #ffffff); /* full-page blue-white */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    
+        nav {
+            background-color: #007BFF;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+    
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    
+        form {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+    
+        input, textarea {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+    
+        input[type="submit"] {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    
+        input[type="submit"]:hover {
+            background-color: #004099;
+        }
+    </style>    
 </head>
 <body>
     <nav>
         <a href="{{ url_for('homepage') }}">Home</a> |
+        <a href="{{ url_for('profile') }}">Profile</a> |
         <a href="{{ url_for('faq') }}">FAQ</a> |
         <a href="{{ url_for('contact') }}">Contact</a>|
         {% if current_user.is_authenticated %}
@@ -17,6 +75,10 @@
             <a href="{{ url_for('login') }}">Login</a> |
             <a href="{{ url_for('register') }}">Register</a>
         {% endif %}
+        {% if current_user.is_authenticated and current_user.role == 'admin' %}
+            <a href="{{ url_for('admin_dashboard') }}">Admin</a>
+        {% endif %}
+
     </nav>        
     {% block content %}{% endblock %}
 </body>

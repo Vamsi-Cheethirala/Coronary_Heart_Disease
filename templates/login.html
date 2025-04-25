@@ -1,9 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method="POST">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
+
+<!-- Flash Message Section -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" style="margin: 20px auto; max-width: 400px;
+        background-color: {% if category == 'success' %}#d1e7dd{% else %}#f8d7da{% endif %};
+        color: {% if category == 'success' %}#0f5132{% else %}#721c24{% endif %};
+        padding: 10px; border-radius: 5px; text-align: center;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<!-- Login Form -->
+<form method="POST" style="margin-top: 20px;">
+    <label>Username:</label><br>
+    <input type="text" name="username" placeholder="Enter username"><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" placeholder="Enter password"><br><br>
+
     <input type="submit" value="Login">
 </form>
-<p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+
+<p style="margin-top: 10px;">
+  Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+</p>
+
+<!-- Auto-hide flash message after 4 seconds -->
+<script>
+  setTimeout(function () {
+    let alert = document.querySelector('.alert');
+    if (alert) {
+      alert.style.display = 'none';
+    }
+  }, 4000);
+</script>
+
 {% endblock %}
