@@ -26,7 +26,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Load your trained model (make sure 'models.pkl' is in the same folder)
-with open("models.pkl", "rb") as f:
+with open("models1.pkl", "rb") as f:
     models = pickle.load(f)
     model = models[0]  # Using RandomForestClassifier
 
@@ -125,15 +125,15 @@ def form():
     if request.method == 'POST':
         features = np.array([float(x) for x in request.form.values()]).reshape(1, -1)
 
-        model_names = ["Random Forest", "Logistic Regression", "Decision Tree", "KNN"]
+        model_names = ["Random Forest", "Logistic Regression", "Decision Tree", "KNN", "Gradient Boost"]
         probabilities = []
 
         for m in models:
             prob = round(m.predict_proba(features)[0][1] * 100, 2)  # Probability of heart disease (label 1)
             probabilities.append(prob)
 
-        main_prediction = models[0].predict(features)[0]
-        main_probability = probabilities[0]
+        main_prediction = models[4].predict(features)[0]
+        main_probability = probabilities[4]
 
         # Save full result from main model to DB
         input_str = ", ".join(request.form.values())
