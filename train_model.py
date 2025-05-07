@@ -1,42 +1,42 @@
 import pandas as pd
-import numpy as np
-import pickle
-
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+import pickle
 
-# Load dataset
-heartData = pd.read_csv("coronary heart disease.csv")
+# Load data
+df = pd.read_csv("heart.csv")
+X = df.drop("target", axis=1)
+y = df["target"]
 
-# Clean data
-heartData = heartData.drop_duplicates()
-X = heartData.drop(['target'], axis=1)
-y = heartData['target']
-
-# Train/test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Train models
-rf_model = RandomForestClassifier(n_estimators=10, random_state=0)
-rf_model.fit(X_train, y_train)
+models = {
+    "Logistic Regression": LogisticRegression(max_iter=1000),
+    "Decision Tree": DecisionTreeClassifier(),
+    "Random Forest": RandomForestClassifier(),
+    "Naive Bayes": GaussianNB(),
+    "Support Vector Machine": SVC(probability=True)
+}
 
-logistic_model = LogisticRegression()
-logistic_model.fit(X_train, y_train)
+all_models = {}
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    all_models[name] = {
+        "model": model,
+        "accuracy": accuracy
+    }
 
-dt_classifier = DecisionTreeClassifier(max_features=13, random_state=0)
-dt_classifier.fit(X_train, y_train)
+# Save all models in a single file
+with open("models.pkl", "wb") as f:
+    pickle.dump(all_models, f)
 
-knn_classifier = KNeighborsClassifier(n_neighbors=11)
-knn_classifier.fit(X_train, y_train)
-
-# Save models into a list
-all_models = [rf_model, logistic_model, dt_classifier, knn_classifier]
-
-# Save to models.pkl
-with open("models.pkl", 'wb') as file:
-    pickle.dump(all_models, file)
-
-print("✅ models.pkl saved successfully!")
+print("✅ Models trained and saved to models.pkl")

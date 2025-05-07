@@ -6,48 +6,7 @@
     {% if result == 1 %}
         ⚠️ Our main model predicts a chance of heart disease.
     {% else %}
-        ✅ Our main model predicts only a chance — low risk.
+        ✅ Our main model predicts only a chance of low risk.
     {% endif %}
 </p>
-
-<h3>📊 Model Comparison</h3>
-<div style="max-width: 500px; margin: auto;">
-    <canvas id="modelChart"></canvas>
-</div>
-
-<p><a href="{{ url_for('form') }}">Predict Again</a> | <a href="{{ url_for('history') }}">View History</a></p>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.getElementById('modelChart').getContext('2d');
-    const chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{ model_names | tojson }},
-            datasets: [{
-                label: 'Heart Disease Risk (%)',
-                data: {{ probabilities | tojson }},
-                backgroundColor: ['#e74c3c', '#3498db', '#f39c12', '#2ecc71'],
-                borderRadius: 5
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    title: {
-                        display: true,
-                        text: 'Probability (%)'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
-</script>
 {% endblock %}
